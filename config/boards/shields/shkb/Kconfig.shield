@@ -1,0 +1,15 @@
+config SHIELD_SHKB_L
+	def_bool $(shields_list_contains,shkb_l)
+
+config SHIELD_SHKB_R
+	def_bool $(shields_list_contains,shkb_r)
+
+# Dongle-mode shields
+config SHIELD_SHKB_L_PERIPHERAL
+	def_bool $(shields_list_contains,shkb_l_peripheral)
+
+config SHIELD_SHKB_R_PERIPHERAL
+	def_bool $(shields_list_contains,shkb_r_peripheral)
+
+config SHIELD_SHKB_DONGLE
+	def_bool $(shields_list_contains,shkb_dongle)

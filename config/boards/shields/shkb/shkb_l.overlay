@@ -1,0 +1,65 @@
+#include "shkb.dtsi"
+#include <dt-bindings/input/input-event-codes.h>
+#include <dt-bindings/zmk/input_transform.h>
+
+/ {
+    chosen {
+        zmk,kscan = &kscan0;
+        zmk,physical-layout = &physical_layout_default;
+        zmk,battery = &vbatt;
+    };
+
+    kscan0: kscan_left {
+        compatible = "zmk,kscan-gpio-charlieplex";
+        gpios
+            = <&xiao_d 0 0>
+            , <&xiao_d 1 0>
+            , <&xiao_d 2 0>
+            , <&xiao_d 3 0>
+            , <&xiao_d 4 0>
+            , <&xiao_d 5 0>
+            ;
+    };
+
+    automouse_layer: automouse_layer {
+        compatible = "zmk,input-processor-temp-layer";
+        #input-processor-cells = <2>;
+        require-prior-idle-ms = <350>; /* キー押下後、何msオートマウスレイヤに入らないようにするか、誤爆防止 */
+        excluded-positions = <22 24 36 37 38 39 49 51>;
+    };
+
+    scroll_transform: scroll_transform {
+        compatible = "zmk,input-processor-transform";
+        #input-processor-cells = <1>;
+        type = <INPUT_EV_REL>;
+        x-codes = <INPUT_REL_X>;
+        y-codes = <INPUT_REL_Y>;
+    };
+
+    scroll_mapper: scroll_mapper {
+        compatible = "zmk,input-processor-code-mapper";
+        #input-processor-cells = <0>;
+        type = <INPUT_EV_REL>;
+        map = <INPUT_REL_X INPUT_REL_HWHEEL
+               INPUT_REL_Y INPUT_REL_WHEEL>;
+    };
+
+    scroll_scaler: scroll_scaler {
+        compatible = "zmk,input-processor-scaler";
+        #input-processor-cells = <2>;
+        type = <INPUT_EV_REL>;
+        codes = <INPUT_REL_WHEEL INPUT_REL_HWHEEL>;
+        track-remainders;
+    };
+
+    trackball_central_listener: trackball_central_listener {
+        compatible = "zmk,input-listener";
+        device = <&trackball_peripheral_split>;
+        input-processors = <&automouse_layer 5 5000>;
+
+        scroll_layer {
+            layers = <6>;
+            input-processors = <&scroll_transform INPUT_TRANSFORM_Y_INVERT &scroll_mapper &scroll_scaler 1 8>;
+        };
+    };
+};

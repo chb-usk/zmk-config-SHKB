@@ -1,0 +1,170 @@
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/pointing.h>
+
+/*
+ * 62-key Split HHKB layout
+ *
+ * Row 0 (15): ESC 1  2  3  4  5  | 6  7  8  9  0  -  =  \  `
+ * Row 1 (14): TAB Q  W  E  R  T  | Y  U  I  O  P  [  ]  BSPC
+ * Row 2 (13): CTL A  S  D  F  G  | H  J  K  L  ;  '  ENT
+ * Row 3 (13): SFT Z  X  C  V  B  | N  M  ,  .  /  SFT UP
+ * Row 4 ( 7): FN  CTL ALT SPC    | RALT GUI CTL
+ */
+
+&mt {
+    flavor = "balanced";
+    quick-tap-ms = <0>;
+};
+
+/ {
+    chosen {
+        zmk,keymap = &keymap;
+
+        /* zmk,matrix-transform is intentionally absent: the transform is resolved
+         * through zmk,physical-layout (set in each shield overlay) so that
+         * USE_PHY_LAYOUTS=true, which ZMK Studio requires. */
+    };
+
+    macros {
+        to_layer_0: to_layer_0 {
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings = <&to 0 &macro_param_1to1 &kp MACRO_PLACEHOLDER>;
+            label = "TO_LAYER_0";
+        };
+
+        BT0Mac: BT0Mac {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&bt BT_SEL 0 &to 0>;
+            label = "BT0MAC";
+        };
+
+        BT1Mac: BT1Mac {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&bt BT_SEL 1 &to 0>;
+            label = "BT1MAC";
+        };
+
+        BT2Win: BT2Win {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&bt BT_SEL 2 &to 1>;
+            label = "BT2WIN";
+        };
+
+        BT3Win: BT3Win {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&bt BT_SEL 3 &to 1>;
+            label = "BT3WIN";
+        };
+        BT4iPad: BT4iPad {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&bt BT_SEL 4 &to 2>;
+            label = "BT4IPAD";
+        };
+    };
+
+    behaviors {
+        lt_to_layer_0: lt_to_layer_0 {
+            compatible = "zmk,behavior-hold-tap";
+            label = "LT_TO_LAYER_0";
+            bindings = <&mo>, <&to_layer_0>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+        };
+    };
+
+    keymap: keymap {
+        compatible = "zmk,keymap";
+
+        /* ---------------------------------------------------------------
+         * Layer 0 – Default (HHKB base)
+         * --------------------------------------------------------------- */
+
+        mac {
+            display-name = "mac";
+            bindings = <
+&kp ESC           &kp N1  &kp N2  &kp N3  &kp N4        &kp N5               &kp N6  &kp N7     &kp N8     &kp N9             &kp N0    &kp MINUS  &kp EQUAL  &kp BSLH  &kp GRAVE
+&kp TAB           &kp Q   &kp W   &kp E   &kp R         &kp T                &kp Y   &kp U      &kp I      &kp O              &kp P     &kp LBKT   &kp RBKT   &kp BSPC
+&kp LEFT_CONTROL  &kp A   &kp S   &kp D   &kp F         &kp G                &kp H   &kp J      &kp K      &kp L              &kp SEMI  &kp SQT    &kp RET
+&kp LSHFT         &kp Z   &kp X   &kp C   &kp V         &kp B                &kp N   &kp M      &kp COMMA  &kp DOT            &kp FSLH  &kp RSHFT  &mo 3
+                                  &mo 3   &kp LEFT_ALT  &mo 6   &kp SPACE            &kp SPACE  &kp RALT   &kp RIGHT_COMMAND
+            >;
+        };
+
+        win {
+            display-name = "win";
+            bindings = <
+&kp ESC           &kp N1  &kp N2  &kp N3  &kp N4        &kp N5               &kp N6  &kp N7     &kp N8         &kp N9             &kp N0    &kp MINUS  &kp EQUAL  &kp BSLH  &kp GRAVE
+&kp TAB           &kp Q   &kp W   &kp E   &kp R         &kp T                &kp Y   &kp U      &kp I          &kp O              &kp P     &kp LBKT   &kp RBKT   &kp BSPC
+&kp LEFT_CONTROL  &kp A   &kp S   &kp D   &kp F         &kp G                &kp H   &kp J      &kp K          &kp L              &kp SEMI  &kp SQT    &kp RET
+&kp LSHFT         &kp Z   &kp X   &kp C   &kp V         &kp B                &kp N   &kp M      &kp COMMA      &kp DOT            &kp FSLH  &kp RSHFT  &mo 3
+                                  &mo 3   &kp LEFT_ALT  &mo 6   &kp SPACE            &kp SPACE  &kp RIGHT_ALT  &kp RIGHT_COMMAND
+            >;
+        };
+
+        /* Layer 2 – iPad (temporary: reuses the mac layout as-is) */
+        iPad {
+            display-name = "iPad";
+            bindings = <
+&kp ESC           &kp N1  &kp N2  &kp N3  &kp N4        &kp N5               &kp N6  &kp N7     &kp N8     &kp N9             &kp N0    &kp MINUS  &kp EQUAL  &kp BSLH  &kp GRAVE
+&kp TAB           &kp Q   &kp W   &kp E   &kp R         &kp T                &kp Y   &kp U      &kp I      &kp O              &kp P     &kp LBKT   &kp RBKT   &kp BSPC
+&kp LEFT_CONTROL  &kp A   &kp S   &kp D   &kp F         &kp G                &kp H   &kp J      &kp K      &kp L              &kp SEMI  &kp SQT    &kp RET
+&kp LSHFT         &kp Z   &kp X   &kp C   &kp V         &kp B                &kp N   &kp M      &kp COMMA  &kp DOT            &kp FSLH  &kp RSHFT  &mo 3
+                                  &mo 3   &kp LEFT_ALT  &mo 6   &kp SPACE            &kp SPACE  &kp RALT   &kp RIGHT_COMMAND
+            >;
+        };
+
+        Number {
+            display-name = "Function";
+            bindings = <
+&trans  &kp F1  &kp F2           &kp F3  &kp F4          &kp F5            &kp F6           &kp F7          &kp F8    &kp F9         &kp F10   &kp F11    &kp F12  &trans   &kp K_CONTEXT_MENU
+&trans  &trans  &kp INS          &trans  &trans          &trans            &trans           &trans          &trans    &trans         &trans    &kp UP     &trans   &kp DEL
+&mo 4   &trans  &kp PRINTSCREEN  &trans  &kp LANGUAGE_2  &trans            &kp PAUSE_BREAK  &kp LANGUAGE_1  &kp HOME  &kp PAGE_UP    &kp LEFT  &kp RIGHT  &trans
+&trans  &trans  &trans           &trans  &trans          &trans            &trans           &trans          &kp END   &kp PAGE_DOWN  &kp DOWN  &trans     &trans
+                                 &trans  &trans          &trans  &trans                     &trans          &trans    &trans
+            >;
+        };
+
+        Bluetooth {
+            display-name = "Bluetooth";
+            bindings = <
+&trans            &BT0Mac  &BT1Mac  &BT2Win  &BT3Win  &BT4iPad                &bt BT_CLR_ALL  &trans          &trans    &trans         &trans    &trans     &trans  &trans  &trans
+&trans            &trans   &trans   &trans   &trans   &trans                  &trans          &trans          &trans    &trans         &trans    &kp UP     &trans  &trans
+&kp LEFT_CONTROL  &trans   &trans   &trans   &trans   &trans                  &trans          &studio_unlock  &kp HOME  &kp PAGE_UP    &kp LEFT  &kp RIGHT  &trans
+&trans            &trans   &trans   &trans   &trans   &trans                  &trans          &trans          &kp END   &kp PAGE_DOWN  &kp DOWN  &trans     &trans
+                                    &trans   &trans   &trans        &trans                    &bt BT_CLR      &trans    &trans
+            >;
+        };
+
+        Mouse {
+            display-name = "Mouse";
+            bindings = <
+&trans            &trans  &trans  &trans  &trans    &trans            &trans  &trans              &trans    &trans               &trans  &trans  &trans  &trans  &trans
+&trans            &trans  &trans  &trans  &trans    &trans            &trans  &kp PAGE_UP         &trans    &kp PAGE_DOWN        &trans  &trans  &trans  &trans
+&kp LEFT_CONTROL  &trans  &trans  &trans  &trans    &trans            &trans  &mkp MB1            &mkp MB3  &mkp MB2             &trans  &trans  &trans
+&kp LEFT_SHIFT    &trans  &trans  &trans  &trans    &trans            &trans  &kp LA(LEFT_ARROW)  &trans    &kp LA(RIGHT_ARROW)  &trans  &trans  &trans
+                                  &trans  &kp LALT  &mo 6   &trans            &trans              &kp RALT  &trans
+            >;
+        };
+
+        scroll {
+            display-name = "Scroll";
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                        &trans  &trans  &trans  &trans            &trans  &trans  &trans
+            >;
+        };
+
+    };
+};

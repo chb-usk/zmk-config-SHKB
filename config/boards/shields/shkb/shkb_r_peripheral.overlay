@@ -1,0 +1,77 @@
+#include "shkb.dtsi"
+#include <dt-bindings/input/input-event-codes.h>
+
+/* Right half – dongle-mode peripheral (trackball → split relay, no local listener) */
+/ {
+    chosen {
+        zmk,kscan = &kscan0;
+        zmk,physical-layout = &physical_layout_default;
+        zmk,battery = &vbatt;
+    };
+
+    kscan0: kscan_right {
+        compatible = "zmk,kscan-gpio-charlieplex";
+        gpios
+            = <&xiao_d 0 0>
+            , <&xiao_d 1 0>
+            , <&xiao_d 2 0>
+            , <&xiao_d 3 0>
+            , <&xiao_d 4 0>
+            , <&xiao_d 5 0>
+            , <&xiao_d 6 0>
+            ;
+    };
+};
+
+&default_transform {
+    row-offset = <6>;
+};
+
+/* spi2 (xiao_spi) uses the same GPIO pins as our spi0. Disable to avoid conflict. */
+&spi2 { status = "disabled"; };
+
+&pinctrl {
+    spi0_default: spi0_default {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
+                    <NRF_PSEL(SPIM_MOSI, 1, 15)>,
+                    <NRF_PSEL(SPIM_MISO, 1, 15)>;
+        };
+    };
+
+    spi0_sleep: spi0_sleep {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 1, 13)>,
+                    <NRF_PSEL(SPIM_MOSI, 1, 15)>,
+                    <NRF_PSEL(SPIM_MISO, 1, 15)>;
+            low-power-enable;
+        };
+    };
+};
+
+/* Wire trackball sensor → split relay so dongle (central) receives raw events */
+&trackball_peripheral_split {
+    device = <&trackball>;
+};
+
+&spi0 {
+    compatible = "nordic,nrf-spim";
+    status = "okay";
+    pinctrl-0 = <&spi0_default>;
+    pinctrl-1 = <&spi0_sleep>;
+    pinctrl-names = "default", "sleep";
+    cs-gpios = <&xiao_d 9 GPIO_ACTIVE_LOW>;
+
+    trackball: pmw3610@0 {
+        compatible = "pixart,pmw3610-alt";
+        reg = <0>;
+        spi-max-frequency = <2000000>;
+        irq-gpios = <&xiao_d 7 GPIO_ACTIVE_LOW>;
+        evt-type = <INPUT_EV_REL>;
+        x-input-code = <INPUT_REL_X>;
+        y-input-code = <INPUT_REL_Y>;
+        invert-x;
+
+        cpi = <600>;
+    };
+};

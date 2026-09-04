@@ -1,0 +1,30 @@
+include:
+  # ── Normal mode (dongleless) ──────────────────────────────────────────
+  - board: seeeduino_xiao_ble
+    shield: shkb_l
+    snippet: studio-rpc-usb-uart
+    artifact-name: SHKB_l
+  - board: seeeduino_xiao_ble
+    shield: shkb_r
+    artifact-name: SHKB_r
+
+  # ── Dongle mode ───────────────────────────────────────────────────────
+  - board: seeeduino_xiao_ble
+    shield: shkb_l_peripheral
+    artifact-name: SHKB_l_peripheral
+  - board: seeeduino_xiao_ble
+    shield: shkb_r_peripheral
+    artifact-name: SHKB_r_peripheral
+  - board: seeeduino_xiao_ble
+    shield: shkb_dongle
+    snippet: studio-rpc-usb-uart
+    artifact-name: SHKB_dongle
+  - board: seeeduino_xiao_ble
+    shield: shkb_dongle prospector_adapter
+    snippet: studio-rpc-usb-uart
+    artifact-name: SHKB_dongle_prospector
+
+  # ── Utility ───────────────────────────────────────────────────────────
+  - board: seeeduino_xiao_ble
+    shield: settings_reset
+    artifact-name: settings_reset

@@ -1,0 +1,26 @@
+#include "shkb.dtsi"
+
+/* Left half – dongle-mode peripheral (no trackball, no listeners) */
+/ {
+    chosen {
+        zmk,kscan = &kscan0;
+        zmk,physical-layout = &physical_layout_default;
+        zmk,battery = &vbatt;
+    };
+
+    kscan0: kscan_left {
+        compatible = "zmk,kscan-gpio-charlieplex";
+        gpios
+            = <&xiao_d 0 0>
+            , <&xiao_d 1 0>
+            , <&xiao_d 2 0>
+            , <&xiao_d 3 0>
+            , <&xiao_d 4 0>
+            , <&xiao_d 5 0>
+            ;
+    };
+};
+
+/* Left half has no trackball – remove the unused input-split relay node
+ * to avoid a build error if zmk,input-split requires the 'device' property. */
+/delete-node/ &trackball_peripheral_split;

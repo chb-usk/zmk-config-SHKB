@@ -1,0 +1,41 @@
+if SHIELD_SHKB_L
+config ZMK_KEYBOARD_NAME
+    default "SHKB"
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+endif
+
+if SHIELD_SHKB_R
+config ZMK_KEYBOARD_NAME
+    default "SHKB"
+endif
+
+# ── Dongle-mode shields ───────────────────────────────────────────────────
+
+if SHIELD_SHKB_DONGLE
+config ZMK_KEYBOARD_NAME
+    default "SHKB"
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+
+config ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS
+    default 2
+
+config BT_MAX_CONN
+    default 7
+
+config BT_MAX_PAIRED
+    default 7
+endif
+
+if SHIELD_SHKB_L_PERIPHERAL
+config ZMK_KEYBOARD_NAME
+    default "SHKB"
+endif
+
+if SHIELD_SHKB_R_PERIPHERAL
+config ZMK_KEYBOARD_NAME
+    default "SHKB"
+endif
