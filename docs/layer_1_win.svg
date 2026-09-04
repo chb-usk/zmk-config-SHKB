@@ -119,7 +119,7 @@
 <rect x="97.5" y="192" width="38" height="38" rx="4" fill="#c4c4c8" filter="url(#ks)"/>
 <text x="116.5" y="211" font-size="9.5" font-weight="600" font-family="'SF Mono',Menlo,Consolas,monospace" fill="#1a1a1c" text-anchor="middle" dominant-baseline="middle">FN3</text>
 <rect x="139.5" y="192" width="59" height="38" rx="4" fill="#c4c4c8" filter="url(#ks)"/>
-<text x="169.0" y="211" font-size="9.5" font-weight="600" font-family="'SF Mono',Menlo,Consolas,monospace" fill="#1a1a1c" text-anchor="middle" dominant-baseline="middle">ALT</text>
+<text x="169.0" y="211" font-size="8.5" font-weight="600" font-family="'SF Mono',Menlo,Consolas,monospace" fill="#1a1a1c" text-anchor="middle" dominant-baseline="middle">LALT</text>
 <rect x="202.5" y="192" width="59" height="38" rx="4" fill="#c4c4c8" filter="url(#ks)"/>
 <text x="232.0" y="211" font-size="9.5" font-weight="600" font-family="'SF Mono',Menlo,Consolas,monospace" fill="#1a1a1c" text-anchor="middle" dominant-baseline="middle">FN6</text>
 <rect x="265.5" y="192" width="59" height="38" rx="4" fill="#c4c4c8" filter="url(#ks)"/>

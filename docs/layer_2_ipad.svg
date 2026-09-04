@@ -127,7 +127,7 @@
 <rect x="381.0" y="192" width="59" height="38" rx="4" fill="#c4c4c8" filter="url(#ks)"/>
 <text x="410.5" y="211" font-size="9.5" font-weight="600" font-family="'SF Mono',Menlo,Consolas,monospace" fill="#1a1a1c" text-anchor="middle" dominant-baseline="middle">SPC</text>
 <rect x="528.0" y="192" width="59" height="38" rx="4" fill="#c4c4c8" filter="url(#ks)"/>
-<text x="557.5" y="211" font-size="8.5" font-weight="600" font-family="'SF Mono',Menlo,Consolas,monospace" fill="#1a1a1c" text-anchor="middle" dominant-baseline="middle">RALT</text>
+<text x="557.5" y="211" font-size="9.5" font-weight="600" font-family="'SF Mono',Menlo,Consolas,monospace" fill="#1a1a1c" text-anchor="middle" dominant-baseline="middle">OPT</text>
 <rect x="591.0" y="192" width="38" height="38" rx="4" fill="#c4c4c8" filter="url(#ks)"/>
 <text x="610.0" y="211" font-size="11.5" font-weight="600" font-family="'SF Mono',Menlo,Consolas,monospace" fill="#1a1a1c" text-anchor="middle" dominant-baseline="middle">⌘</text>
 <rect x="444.0" y="192" width="80" height="38" rx="4" fill="#c4c4c8" filter="url(#ks)"/>
