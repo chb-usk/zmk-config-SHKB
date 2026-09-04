@@ -115,7 +115,7 @@ LiPo（リチウムポリマー）バッテリーは扱いを誤ると膨張・�
 
 ### Layer 0 – mac
 
-Layer 0 が Mac 用ベースレイヤーです。起動時はこのレイヤーが選択されます。ホームロウ左端が ⌘、右サムが RALT / CTL。
+Layer 0 が Mac 用ベースレイヤーです。起動時はこのレイヤーが選択されます。ホームロウ左端が CTL、左右サムの Alt キーはどちらも OPT、右端は ⌘。
 
 ![Layer 0 – mac](docs/layer_0_mac.svg)
 
@@ -123,7 +123,7 @@ Layer 0 が Mac 用ベースレイヤーです。起動時はこのレイヤー�
 
 ### Layer 1 – win
 
-Layer 1 が Windows 用ベースレイヤーです。ホームロウ左端が CTL、右サムが RALT / ⌘。
+Layer 1 が Windows 用ベースレイヤーです。ホームロウ左端が CTL、左右サムの Alt キーは LALT / RALT、右端は ⌘。
 
 ![Layer 1 – win](docs/layer_1_win.svg)
 
