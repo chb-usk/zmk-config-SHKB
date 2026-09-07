@@ -169,6 +169,36 @@ BT プロファイル切り替えレイヤーです。BT0/1 は Mac モード、
 
 ---
 
+## キーマップの編集
+
+GitHub アカウントさえあれば、ZMK や devicetree の知識がなくてもブラウザ上でキーマップを編集できます（参考: [roBa ビルドガイド – キーマップの編集](https://github.com/kumamuk-git/roBa/blob/main/doc/v2/buildguide_v2.md#6キーマップの編集)）。
+
+[KeymapEditor](https://nickcoutsos.github.io/keymap-editor/) は、GitHub 上の zmk-config リポジトリと連携し、GUI 上でキーマップを編集してそのままコミットできる Web ツールです。
+
+```mermaid
+flowchart LR
+    A["zmk-config-SHKB を<br/>Fork"] --> B["Fork先リポジトリで<br/>GitHub Actions を有効化"]
+    B --> C["KeymapEditor で<br/>GitHub ログイン"]
+    C --> D["Fork先リポジトリへの<br/>アクセスを許可"]
+    D --> E["ブラウザ上で<br/>キーマップを編集"]
+    E --> F["Save で<br/>Fork先へ自動コミット"]
+    F --> G["GitHub Actions が<br/>自動ビルド"]
+    G --> H["Artifacts から<br/>.uf2 をダウンロード"]
+```
+
+1. GitHub で [zmk-config-SHKB](https://github.com/chb-usk/zmk-config-SHKB) を Fork します。
+2. Fork したリポジトリの **Actions** タブを開き、「I understand my workflows, go ahead and enable them」をクリックして GitHub Actions を有効化します。
+3. [KeymapEditor](https://nickcoutsos.github.io/keymap-editor/) にアクセスし、「Login with GitHub」から GitHub アカウントでログインします。
+4. 認証画面で Fork したリポジトリへのアクセスを許可します。
+5. 読み込まれたレイヤー一覧・キーボード配列から、編集したいキーをクリックしてキーコードを変更します。
+6. 編集が終わったら **Save** をクリックすると、Fork先リポジトリへ自動的にコミットされ、GitHub Actions によるビルドが走ります（2〜4 分程度）。
+7. ビルド完了後、Fork先リポジトリの Actions タブから該当の実行結果を開き、Artifacts から `.uf2` をダウンロードして [ファームウェア書き込み](#ファームウェア書き込み) の手順で書き込みます。
+
+> [!NOTE]
+> 自動生成されるキー配列はあくまで叩き台のため、実機と見た目が異なる場合があります。動作するキーコードの割り当て自体は正しく反映されるので、見た目のずれは気にせず進めて問題ありません。
+
+---
+
 ## ビルド
 
 GitHub Actions で自動ビルドされます。生成される `.uf2` ファイルは以下の名前になります。
