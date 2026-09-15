@@ -76,14 +76,14 @@ LiPo（リチウムポリマー）バッテリーは扱いを誤ると膨張・�
 ### ノーマルモード（ドングルなし）
 
 ```
-左半分（Central）  ←──BLE──→  右半分（Peripheral）
-     │
-    BLE
-     │
-   ホスト PC
+左半分（Peripheral）  ←──BLE──→  右半分（Central）
+                                     │
+                                    BLE
+                                     │
+                                  ホスト PC
 ```
 
-左半分がセントラルとなり、キーマップ処理とトラックボールイベントの受信を担います。右半分はペリフェラルとして動作します。
+右半分がセントラルとなり、キーマップ処理とトラックボールイベントの処理を担います。トラックボールが右半分に搭載されているため、右半分をセントラルにすることでトラックボールイベントをペリフェラル→セントラル間の BLE 中継を挟まずローカルで処理でき、遅延・ジッタを低減できます。左半分はペリフェラルとして動作します。
 
 ### ドングルモード
 
@@ -205,8 +205,8 @@ GitHub Actions で自動ビルドされます。生成される `.uf2` ファイ
 
 | ファイル名 | 用途 |
 |------------|------|
-| `SHKB_l.uf2` | ノーマルモード 左半分（Central） |
-| `SHKB_r.uf2` | ノーマルモード 右半分（Peripheral） |
+| `SHKB_l.uf2` | ノーマルモード 左半分（Peripheral） |
+| `SHKB_r.uf2` | ノーマルモード 右半分（Central） |
 | `SHKB_l_peripheral.uf2` | ドングルモード 左半分 |
 | `SHKB_r_peripheral.uf2` | ドングルモード 右半分 |
 | `SHKB_dongle.uf2` | ドングル（XIAO BLE） |
@@ -252,8 +252,8 @@ flowchart LR
 ```mermaid
 flowchart TD
     subgraph Normal["ノーマルモード（2 枚）"]
-        L1["左半分"] -->|"SHKB_l.uf2"| L1f["Central"]
-        R1["右半分"] -->|"SHKB_r.uf2"| R1f["Peripheral"]
+        L1["左半分"] -->|"SHKB_l.uf2"| L1f["Peripheral"]
+        R1["右半分"] -->|"SHKB_r.uf2"| R1f["Central"]
     end
     subgraph Dongle["ドングルモード（3 枚）"]
         L2["左半分"] -->|"SHKB_l_peripheral.uf2"| L2f["Peripheral"]

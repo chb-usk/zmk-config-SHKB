@@ -2,10 +2,10 @@ include:
   # ── Normal mode (dongleless) ──────────────────────────────────────────
   - board: seeeduino_xiao_ble
     shield: shkb_l
-    snippet: studio-rpc-usb-uart
     artifact-name: SHKB_l
   - board: seeeduino_xiao_ble
     shield: shkb_r
+    snippet: studio-rpc-usb-uart
     artifact-name: SHKB_r
 
   # ── Dongle mode ───────────────────────────────────────────────────────

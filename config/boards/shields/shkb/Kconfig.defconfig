@@ -1,14 +1,17 @@
 if SHIELD_SHKB_L
 config ZMK_KEYBOARD_NAME
     default "SHKB"
-
-config ZMK_SPLIT_ROLE_CENTRAL
-    default y
 endif
 
+# Right half carries the trackball (PMW3610); making it the split central
+# avoids relaying raw trackball events over the peripheral->central BLE hop,
+# reducing latency/jitter for cursor and scroll movement in normal mode.
 if SHIELD_SHKB_R
 config ZMK_KEYBOARD_NAME
     default "SHKB"
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
 endif
 
 # ── Dongle-mode shields ───────────────────────────────────────────────────
