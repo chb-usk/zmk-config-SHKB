@@ -115,6 +115,8 @@ LiPo（リチウムポリマー）バッテリーは扱いを誤ると膨張・�
 
 凡例：`▽` = 下位レイヤーに透過 / <span style="background:#b0c8f0;padding:0 4px">青</span> = ファンクション / <span style="background:#b0d8b0;padding:0 4px">緑</span> = ナビゲーション / <span style="background:#f5dbb0;padding:0 4px">橙</span> = Bluetooth / <span style="background:#f0b8d8;padding:0 4px">桃</span> = マウス
 
+各レイヤー図は `python3 docs/generate_layer_svgs.py` で `config/shkb.keymap` から再生成できます（keymap を変更したら実行してください）。
+
 ---
 
 ### Layer 0 – mac
@@ -143,7 +145,7 @@ iPad 接続用のベースレイヤーです。キー配列は暫定的に Layer
 
 ### Layer 3 – Function（FN）
 
-FN キー（または ↑ キー）を押している間有効になるレイヤーです。F1〜F12・ナビゲーション・IME 切り替えを収録しています。TAB 位置の `FN4` で Bluetooth レイヤーへ移行します。
+FN キー（または ↑ キー）を押している間有効になるレイヤーです。F1〜F12・ナビゲーション・IME 切り替え・コンテキストメニュー（右上端の `Menu`）を収録しています。ホームロウ左端（CTL 位置）の `FN4` で Bluetooth レイヤーへ移行します。
 
 ![Layer 3 – Function](docs/layer_3_function.svg)
 
@@ -151,7 +153,7 @@ FN キー（または ↑ キー）を押している間有効になるレイヤ
 
 ### Layer 4 – Bluetooth
 
-BT プロファイル切り替えレイヤーです。BT0/1 は Mac モード、BT2/3 は Win モード、BT4 は iPad モードに同時切り替えするマクロです。`CLRa` で全プロファイルをクリアします。
+BT プロファイル切り替えレイヤーです。BT0/1 は Mac モード、BT2/3 は Win モード、BT4 は iPad モードに同時切り替えするマクロです。`CLRa` で全プロファイルを、右サムの `CLR` で選択中のプロファイルをクリアします。`STU` は ZMK Studio のロック解除です。ホームロウ左端の CTL と、Function レイヤーと同じ位置のナビゲーションキー（矢印・HOM/END・PgU/PgD）も使えます。
 
 ![Layer 4 – Bluetooth](docs/layer_4_bluetooth.svg)
 
