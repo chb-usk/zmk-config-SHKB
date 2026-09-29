@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Regenerate the per-layer diagrams (docs/layer_<n>_<name>.svg) from config/shkb.keymap.
 
+layout.svg (the diagram at the top of the README) is a copy of the layer 0 diagram.
+
 Usage (from the repository root):  python3 docs/generate_layer_svgs.py
 
 Key positions follow the physical layout (1u = 42px, key = 42*u - 4 px).
@@ -145,8 +147,12 @@ def render(layer_name, bindings):
 def main():
     for i, (name, bindings) in enumerate(parse_layers(KEYMAP.read_text())):
         path = OUT_DIR / f"layer_{i}_{name.lower()}.svg"
-        path.write_text(render(name, bindings))
+        svg = render(name, bindings)
+        path.write_text(svg)
         print(f"wrote {path.relative_to(ROOT)}")
+        if i == 0:
+            (ROOT / "layout.svg").write_text(svg)
+            print("wrote layout.svg")
 
 
 if __name__ == "__main__":
