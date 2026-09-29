@@ -1,0 +1,5 @@
+description: Show a layer's color on the local layer LED (param = layer index)
+
+compatible: "zmk,behavior-shkb-layer-led"
+
+include: one_param.yaml

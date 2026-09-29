@@ -1,0 +1,5 @@
+target_sources_ifdef(CONFIG_ZMK_BEHAVIOR_SHKB_LAYER_LED app PRIVATE src/behavior_layer_led.c)
+target_sources_ifdef(CONFIG_SHKB_LAYER_LED app PRIVATE src/layer_led.c)
+target_sources_ifdef(CONFIG_SHKB_LAYER_LED_NOTIFY app PRIVATE src/layer_led_notify.c)
+
+zephyr_include_directories(include)

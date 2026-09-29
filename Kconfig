@@ -1,0 +1,33 @@
+config SHKB_LAYER_LED
+    bool "Drive the XIAO BLE onboard RGB LED as a layer/battery indicator"
+    select GPIO
+
+config SHKB_LAYER_LED_SHOW_LAYERS
+    bool "Light the LED in a per-layer color on layer changes sent by the central"
+    default y
+    depends on SHKB_LAYER_LED
+
+config SHKB_LAYER_LED_DURATION_MS
+    int "How long the layer color stays lit after a layer change (ms)"
+    default 1000
+    depends on SHKB_LAYER_LED_SHOW_LAYERS
+
+config SHKB_LAYER_LED_BATTERY
+    bool "Show the battery level on the LED at power-on (green/yellow/red)"
+    default y
+    depends on SHKB_LAYER_LED && ZMK_BATTERY_REPORTING
+
+config SHKB_LAYER_LED_BATTERY_MS
+    int "How long the power-on battery color stays lit (ms)"
+    default 2000
+    depends on SHKB_LAYER_LED_BATTERY
+
+config SHKB_LAYER_LED_NOTIFY
+    bool "Send layer changes to the layer LED on every split half via the lyr_led behavior"
+    depends on !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
+
+DT_COMPAT_ZMK_BEHAVIOR_SHKB_LAYER_LED := zmk,behavior-shkb-layer-led
+
+config ZMK_BEHAVIOR_SHKB_LAYER_LED
+    bool
+    default $(dt_compat_enabled,$(DT_COMPAT_ZMK_BEHAVIOR_SHKB_LAYER_LED))

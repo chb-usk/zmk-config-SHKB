@@ -2,6 +2,17 @@
 #include <physical_layouts.dtsi>
 
 / {
+    /* Layer LED relay (src/behavior_layer_led.c). The split central invokes
+     * this GLOBAL-locality behavior on every layer change so the left half,
+     * which has no layer state of its own, can light its LED. Must exist on
+     * every shield, and the node name must stay <= 8 chars (split payload). */
+    behaviors {
+        lyr_led: lyr_led {
+            compatible = "zmk,behavior-shkb-layer-led";
+            #binding-cells = <1>;
+        };
+    };
+
     chosen {
         /* zmk,matrix-transform and zmk,kscan are set per-shield in each overlay.
          * Keeping them here would prevent ZMK Studio (USE_PHY_LAYOUTS requires

@@ -99,15 +99,19 @@ LiPo（リチウムポリマー）バッテリーは扱いを誤ると膨張・�
 
 ## レイヤー構成
 
-| # | 名前 | 用途 |
-|---|------|------|
-| 0 | **mac** | Mac 向けベースレイヤー（⌘キー） |
-| 1 | **win** | Windows 向けベースレイヤー（CTLキー） |
-| 2 | **iPad** | iPad 向けベースレイヤー（暫定的に mac 配列を流用） |
-| 3 | **Function** | FN レイヤー（F1〜F12・ナビゲーション） |
-| 4 | **Bluetooth** | BT プロファイル切り替え |
-| 5 | **Mouse** | AutoMouse（トラックボール移動で自動起動） |
-| 6 | **Scroll** | トラックボールをスクロールにリマップ |
+| # | 名前 | 用途 | LED |
+|---|------|------|-----|
+| 0 | **mac** | Mac 向けベースレイヤー（⌘キー） | 消灯 |
+| 1 | **win** | Windows 向けベースレイヤー（CTLキー） | 消灯 |
+| 2 | **iPad** | iPad 向けベースレイヤー（暫定的に mac 配列を流用） | 消灯 |
+| 3 | **Function** | FN レイヤー（F1〜F12・ナビゲーション） | 緑 |
+| 4 | **Bluetooth** | BT プロファイル切り替え | 黄 |
+| 5 | **Mouse** | AutoMouse（トラックボール移動で自動起動） | シアン |
+| 6 | **Scroll** | トラックボールをスクロールにリマップ | マゼンタ |
+
+**レイヤーLED**：レイヤーが切り替わると、**左手側**の XIAO BLE 上の RGB LED が上表の色で **1 秒間だけ** 点灯します（電池消費を抑えるため常時点灯はせず、消費電力の大きいトラックボール側も避けています）。点灯中に別のレイヤーへ切り替わると、その色に変わって 1 秒を計り直します。レイヤー状態は split central（ノーマルモードは右手側、ドングルモードはドングル）しか持たないため、central が `&lyr_led` behavior（GLOBAL locality）経由で左手側へレイヤー番号を送っています。実装は [src/layer_led.c](src/layer_led.c)（点灯）/ [src/layer_led_notify.c](src/layer_led_notify.c)（通知）、点灯時間は `CONFIG_SHKB_LAYER_LED_DURATION_MS`（既定 1000）で変更できます。
+
+**電池残量表示**：電源 ON 時、左右それぞれの LED が自身の電池残量に応じて **2 秒間** 点灯します（50〜100% 緑 / 20〜49% 黄 / 19% 以下 赤）。点灯時間は `CONFIG_SHKB_LAYER_LED_BATTERY_MS` で変更できます。
 
 凡例：`▽` = 下位レイヤーに透過 / <span style="background:#b0c8f0;padding:0 4px">青</span> = ファンクション / <span style="background:#b0d8b0;padding:0 4px">緑</span> = ナビゲーション / <span style="background:#f5dbb0;padding:0 4px">橙</span> = Bluetooth / <span style="background:#f0b8d8;padding:0 4px">桃</span> = マウス
 
