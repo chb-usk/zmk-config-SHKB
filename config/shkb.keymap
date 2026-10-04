@@ -62,6 +62,7 @@
             bindings = <&bt BT_SEL 3 &to 1>;
             label = "BT3WIN";
         };
+
         BT4iPad: BT4iPad {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -104,13 +105,14 @@
             bindings = <
 &kp ESC           &kp N1  &kp N2  &kp N3  &kp N4        &kp N5               &kp N6  &kp N7     &kp N8         &kp N9             &kp N0    &kp MINUS  &kp EQUAL  &kp BSLH  &kp GRAVE
 &kp TAB           &kp Q   &kp W   &kp E   &kp R         &kp T                &kp Y   &kp U      &kp I          &kp O              &kp P     &kp LBKT   &kp RBKT   &kp BSPC
-&kp LEFT_CONTROL  &kp A   &kp S   &kp D   &kp F         &kp G                &kp H   &kp J      &kp K          &kp L              &kp SEMI  &kp SQT    &kp RET
+&kp LEFT_COMMAND  &kp A   &kp S   &kp D   &kp F         &kp G                &kp H   &kp J      &kp K          &kp L              &kp SEMI  &kp SQT    &kp RET
 &kp LSHFT         &kp Z   &kp X   &kp C   &kp V         &kp B                &kp N   &kp M      &kp COMMA      &kp DOT            &kp FSLH  &kp RSHFT  &mo 3
-                                  &mo 3   &kp LEFT_ALT  &mo 6   &kp SPACE            &kp SPACE  &kp RIGHT_ALT  &kp RIGHT_COMMAND
+                                  &mo 3   &kp LEFT_ALT  &mo 6   &kp SPACE            &kp SPACE  &kp RIGHT_ALT  &kp RIGHT_CONTROL
             >;
         };
 
         /* Layer 2 – iPad (temporary: reuses the mac layout as-is) */
+
         iPad {
             display-name = "iPad";
             bindings = <
@@ -136,11 +138,11 @@
         Bluetooth {
             display-name = "Bluetooth";
             bindings = <
-&trans            &BT0Mac  &BT1Mac  &BT2Win  &BT3Win  &BT4iPad                &bt BT_CLR_ALL  &trans          &trans    &trans         &trans    &trans     &trans  &trans  &trans
-&trans            &trans   &trans   &trans   &trans   &trans                  &trans          &trans          &trans    &trans         &trans    &kp UP     &trans  &trans
-&kp LEFT_CONTROL  &trans   &trans   &trans   &trans   &trans                  &trans          &studio_unlock  &kp HOME  &kp PAGE_UP    &kp LEFT  &kp RIGHT  &trans
-&trans            &trans   &trans   &trans   &trans   &trans                  &trans          &trans          &kp END   &kp PAGE_DOWN  &kp DOWN  &trans     &trans
-                                    &trans   &trans   &trans        &trans                    &bt BT_CLR      &trans    &trans
+&trans            &BT0Mac  &BT1Mac  &BT2Win  &BT3Win  &BT4iPad            &bt BT_CLR_ALL  &trans          &trans    &trans         &trans    &trans     &trans  &trans  &trans
+&trans            &trans   &trans   &trans   &trans   &trans              &trans          &trans          &trans    &trans         &trans    &kp UP     &trans  &trans
+&kp LEFT_CONTROL  &trans   &trans   &trans   &trans   &trans              &trans          &studio_unlock  &kp HOME  &kp PAGE_UP    &kp LEFT  &kp RIGHT  &trans
+&trans            &trans   &trans   &trans   &trans   &trans              &trans          &trans          &kp END   &kp PAGE_DOWN  &kp DOWN  &trans     &trans
+                                    &trans   &trans   &trans    &trans                    &bt BT_CLR      &trans    &trans
             >;
         };
 
@@ -165,6 +167,5 @@
                         &trans  &trans  &trans  &trans            &trans  &trans  &trans
             >;
         };
-
     };
 };
