@@ -1,5 +1,5 @@
 config SHKB_LAYER_LED
-    bool "Drive the XIAO BLE onboard RGB LED as a layer/battery indicator"
+    bool "Drive the XIAO BLE onboard RGB LED as a layer/battery/BLE profile indicator"
     select GPIO
 
 config SHKB_LAYER_LED_SHOW_LAYERS
@@ -21,6 +21,20 @@ config SHKB_LAYER_LED_BATTERY_MS
     int "How long the power-on battery color stays lit (ms)"
     default 2000
     depends on SHKB_LAYER_LED_BATTERY
+
+config SHKB_LAYER_LED_PROFILE
+    bool "Blink the active BLE profile's color at power-on and on profile switch"
+    depends on SHKB_LAYER_LED && ZMK_BLE && (!ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL)
+
+config SHKB_LAYER_LED_PROFILE_MS
+    int "Total duration of the BLE profile blink (ms)"
+    default 2000
+    depends on SHKB_LAYER_LED_PROFILE
+
+config SHKB_LAYER_LED_PROFILE_BLINK_MS
+    int "On time and off time of each BLE profile blink (ms)"
+    default 200
+    depends on SHKB_LAYER_LED_PROFILE
 
 config SHKB_LAYER_LED_NOTIFY
     bool "Send layer changes to the layer LED on every split half via the lyr_led behavior"
