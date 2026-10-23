@@ -7,7 +7,8 @@ Usage (from the repository root):  python3 docs/generate_layer_svgs.py
 
 Key positions follow the physical layout (1u = 42px, key = 42*u - 4 px).
 Labels and colors are derived from each binding; add an entry to LABELS
-when a new keycode/behavior appears in the keymap.
+when a new keycode/behavior appears in the keymap. Combos (zmk,combos) are drawn
+as a pill between their keys on every layer they are active on.
 """
 
 import re
@@ -39,6 +40,7 @@ FILL = {
     "nav": "#b0d8b0",
     "bt": "#f5dbb0",
     "mouse": "#f0b8d8",
+    "combo": "#d9c2f0",
 }
 
 SYMBOLS = {
@@ -50,7 +52,7 @@ SYMBOLS = {
 LABELS = {
     "kp ESC": ("ESC", "mod"), "kp TAB": ("TAB", "mod"), "kp BSPC": ("BSP", "mod"),
     "kp RET": ("ENT", "mod"), "kp SPACE": ("SPC", "mod"),
-    "kp LEFT_CONTROL": ("CTL", "mod"),
+    "kp LEFT_CONTROL": ("CTL", "mod"), "kp RIGHT_CONTROL": ("CTL", "mod"),
     "kp LSHFT": ("SFT", "mod"), "kp LEFT_SHIFT": ("SFT", "mod"), "kp RSHFT": ("SFT", "mod"),
     "kp LEFT_COMMAND": ("⌘", "mod"), "kp RIGHT_COMMAND": ("⌘", "mod"),
     "kp LA(LEFT_ARROW)": ("A+←", "mod"), "kp LA(RIGHT_ARROW)": ("A+→", "mod"),
@@ -82,6 +84,21 @@ def parse_layers(text):
     return layers
 
 
+def parse_combos(text):
+    """[(binding, key positions, layer indices or None for all layers)]"""
+    combos = []
+    for m in re.finditer(r"\{([^{}]*key-positions\s*=\s*<([^>]*)>[^{}]*)\}", text):
+        body = m.group(1)
+        binding = " ".join(re.search(r"bindings\s*=\s*<&([^>]*)>", body).group(1).split())
+        layers = re.search(r"layers\s*=\s*<([^>]*)>", body)
+        combos.append((
+            binding,
+            [int(k) for k in m.group(2).split()],
+            {int(n) for n in layers.group(1).split()} if layers else None,
+        ))
+    return combos
+
+
 def label_for(binding, layer_name):
     if binding == "trans":
         return "▽", "trans"
@@ -107,10 +124,12 @@ def num(v):
     return str(int(v)) if float(v).is_integer() else str(v)
 
 
-def render(layer_name, bindings):
+def render(layer_name, bindings, combos=()):
     keys = [(x, y, u) for y, row in ROWS for x, u in row]
     if len(bindings) != len(keys):
         raise SystemExit(f"Layer {layer_name}: {len(bindings)} bindings, expected {len(keys)}")
+    # Keys in a combo carry their label in the upper half, leaving the lower half for the combo pill
+    combo_keys = {p for _, positions, _ in combos for p in positions}
 
     out = [
         '<svg xmlns="http://www.w3.org/2000/svg" width="760" height="256" viewBox="0 0 760 256">',
@@ -122,17 +141,33 @@ def render(layer_name, bindings):
         '<rect x="16" y="16" width="314.5" height="220.0" rx="10" fill="#242426" filter="url(#ps)"/>',
         '<rect x="354.0" y="16" width="386.0" height="220.0" rx="10" fill="#242426" filter="url(#ps)"/>',
     ]
-    for (x, y, u), binding in zip(keys, bindings):
+    for i, ((x, y, u), binding) in enumerate(zip(keys, bindings)):
         label, cat = label_for(binding, layer_name)
         w = 42 * u - 4
         size = "11.5" if len(label) == 1 else "8.5" if len(label) >= 4 else "9.5"
         color = "#9a9aa0" if cat == "trans" else "#1a1a1c"
         text = label.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
         out.append(f'<rect x="{x}" y="{y}" width="{num(w)}" height="38" rx="4" fill="{FILL[cat]}" filter="url(#ks)"/>')
+        ty = y + 12 if i in combo_keys else y + 19
         out.append(
-            f'<text x="{x + w / 2:.1f}" y="{y + 19}" font-size="{size}" font-weight="600" '
+            f'<text x="{x + w / 2:.1f}" y="{ty}" font-size="{size}" font-weight="600" '
             f"font-family=\"'SF Mono',Menlo,Consolas,monospace\" fill=\"{color}\" "
             f'text-anchor="middle" dominant-baseline="middle">{text}</text>'
+        )
+    # Combos: a pill between the combo's keys, in the lower half of their row
+    # (below their raised labels, without reaching into the row underneath)
+    for binding, positions, _ in combos:
+        label, _ = label_for(binding, layer_name)
+        cx = sum(keys[p][0] + (42 * keys[p][2] - 4) / 2 for p in positions) / len(positions)
+        cy = max(keys[p][1] for p in positions) + 28
+        out.append(
+            f'<rect x="{cx - 14:.1f}" y="{cy - 7:.1f}" width="28" height="14" rx="7" '
+            f'fill="{FILL["combo"]}" stroke="#6a4a9a" stroke-width="1"/>'
+        )
+        out.append(
+            f'<text x="{cx:.1f}" y="{cy:.1f}" font-size="9.5" font-weight="700" '
+            f"font-family=\"'SF Mono',Menlo,Consolas,monospace\" fill=\"#3a2a5a\" "
+            f'text-anchor="middle" dominant-baseline="middle">{label}</text>'
         )
     # Trackball between the right thumb keys
     out += [
@@ -145,9 +180,11 @@ def render(layer_name, bindings):
 
 
 def main():
-    for i, (name, bindings) in enumerate(parse_layers(KEYMAP.read_text())):
+    text = KEYMAP.read_text()
+    combos = parse_combos(text)
+    for i, (name, bindings) in enumerate(parse_layers(text)):
         path = OUT_DIR / f"layer_{i}_{name.lower()}.svg"
-        svg = render(name, bindings)
+        svg = render(name, bindings, [c for c in combos if c[2] is None or i in c[2]])
         path.write_text(svg)
         print(f"wrote {path.relative_to(ROOT)}")
         if i == 0:

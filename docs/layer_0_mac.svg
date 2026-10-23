@@ -65,7 +65,7 @@
 <rect x="675.0" y="66" width="59" height="38" rx="4" fill="#c4c4c8" filter="url(#ks)"/>
 <text x="704.5" y="85" font-size="9.5" font-weight="600" font-family="'SF Mono',Menlo,Consolas,monospace" fill="#1a1a1c" text-anchor="middle" dominant-baseline="middle">BSP</text>
 <rect x="24.0" y="108" width="69.5" height="38" rx="4" fill="#c4c4c8" filter="url(#ks)"/>
-<text x="58.8" y="127" font-size="9.5" font-weight="600" font-family="'SF Mono',Menlo,Consolas,monospace" fill="#1a1a1c" text-anchor="middle" dominant-baseline="middle">CTL</text>
+<text x="58.8" y="127" font-size="11.5" font-weight="600" font-family="'SF Mono',Menlo,Consolas,monospace" fill="#1a1a1c" text-anchor="middle" dominant-baseline="middle">⌘</text>
 <rect x="97.5" y="108" width="38" height="38" rx="4" fill="#e0e0e3" filter="url(#ks)"/>
 <text x="116.5" y="127" font-size="11.5" font-weight="600" font-family="'SF Mono',Menlo,Consolas,monospace" fill="#1a1a1c" text-anchor="middle" dominant-baseline="middle">A</text>
 <rect x="139.5" y="108" width="38" height="38" rx="4" fill="#e0e0e3" filter="url(#ks)"/>
@@ -79,9 +79,9 @@
 <rect x="391.5" y="108" width="38" height="38" rx="4" fill="#e0e0e3" filter="url(#ks)"/>
 <text x="410.5" y="127" font-size="11.5" font-weight="600" font-family="'SF Mono',Menlo,Consolas,monospace" fill="#1a1a1c" text-anchor="middle" dominant-baseline="middle">H</text>
 <rect x="433.5" y="108" width="38" height="38" rx="4" fill="#e0e0e3" filter="url(#ks)"/>
-<text x="452.5" y="127" font-size="11.5" font-weight="600" font-family="'SF Mono',Menlo,Consolas,monospace" fill="#1a1a1c" text-anchor="middle" dominant-baseline="middle">J</text>
+<text x="452.5" y="120" font-size="11.5" font-weight="600" font-family="'SF Mono',Menlo,Consolas,monospace" fill="#1a1a1c" text-anchor="middle" dominant-baseline="middle">J</text>
 <rect x="475.5" y="108" width="38" height="38" rx="4" fill="#e0e0e3" filter="url(#ks)"/>
-<text x="494.5" y="127" font-size="11.5" font-weight="600" font-family="'SF Mono',Menlo,Consolas,monospace" fill="#1a1a1c" text-anchor="middle" dominant-baseline="middle">K</text>
+<text x="494.5" y="120" font-size="11.5" font-weight="600" font-family="'SF Mono',Menlo,Consolas,monospace" fill="#1a1a1c" text-anchor="middle" dominant-baseline="middle">K</text>
 <rect x="517.5" y="108" width="38" height="38" rx="4" fill="#e0e0e3" filter="url(#ks)"/>
 <text x="536.5" y="127" font-size="11.5" font-weight="600" font-family="'SF Mono',Menlo,Consolas,monospace" fill="#1a1a1c" text-anchor="middle" dominant-baseline="middle">L</text>
 <rect x="559.5" y="108" width="38" height="38" rx="4" fill="#e0e0e3" filter="url(#ks)"/>
@@ -129,7 +129,9 @@
 <rect x="528.0" y="192" width="59" height="38" rx="4" fill="#c4c4c8" filter="url(#ks)"/>
 <text x="557.5" y="211" font-size="9.5" font-weight="600" font-family="'SF Mono',Menlo,Consolas,monospace" fill="#1a1a1c" text-anchor="middle" dominant-baseline="middle">OPT</text>
 <rect x="591.0" y="192" width="38" height="38" rx="4" fill="#c4c4c8" filter="url(#ks)"/>
-<text x="610.0" y="211" font-size="11.5" font-weight="600" font-family="'SF Mono',Menlo,Consolas,monospace" fill="#1a1a1c" text-anchor="middle" dominant-baseline="middle">⌘</text>
+<text x="610.0" y="211" font-size="9.5" font-weight="600" font-family="'SF Mono',Menlo,Consolas,monospace" fill="#1a1a1c" text-anchor="middle" dominant-baseline="middle">CTL</text>
+<rect x="459.5" y="129.0" width="28" height="14" rx="7" fill="#d9c2f0" stroke="#6a4a9a" stroke-width="1"/>
+<text x="473.5" y="136.0" font-size="9.5" font-weight="700" font-family="'SF Mono',Menlo,Consolas,monospace" fill="#3a2a5a" text-anchor="middle" dominant-baseline="middle">FN6</text>
 <rect x="444.0" y="192" width="80" height="38" rx="4" fill="#c4c4c8" filter="url(#ks)"/>
 <circle cx="484.0" cy="211.0" r="19" fill="url(#tbg)" stroke="#3a3a3e" stroke-width="1.5"/>
 <ellipse cx="477.0" cy="204.0" rx="6" ry="4" fill="white" fill-opacity="0.22" transform="rotate(-25,484.0,211.0)"/>

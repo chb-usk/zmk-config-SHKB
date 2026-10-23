@@ -103,11 +103,11 @@ LiPo（リチウムポリマー）バッテリーは扱いを誤ると膨張・�
 |---|------|------|-----|
 | 0 | **mac** | Mac 向けベースレイヤー（⌘キー） | 消灯 |
 | 1 | **win** | Windows 向けベースレイヤー（CTLキー） | 消灯 |
-| 2 | **iPad** | iPad 向けベースレイヤー（暫定的に mac 配列を流用） | 消灯 |
+| 2 | **iPad** | iPad 向けベースレイヤー（mac 配列ベース、サムキーは ⌘ / CTL / OPT） | 消灯 |
 | 3 | **Function** | FN レイヤー（F1〜F12・ナビゲーション） | 緑 |
 | 4 | **Bluetooth** | BT プロファイル切り替え | 黄 |
 | 5 | **Mouse** | AutoMouse（トラックボール移動で自動起動） | シアン |
-| 6 | **Scroll** | トラックボールをスクロールにリマップ | マゼンタ |
+| 6 | **Scroll** | トラックボールをスクロールにリマップ（`J`+`K` 同時押しコンボでも起動） | マゼンタ |
 
 **レイヤーLED**：レイヤーが切り替わると、**左手側**の XIAO BLE 上の RGB LED が上表の色で **1 秒間だけ** 点灯します（電池消費を抑えるため常時点灯はせず、消費電力の大きいトラックボール側も避けています）。点灯中に別のレイヤーへ切り替わると、その色に変わって 1 秒を計り直します。レイヤー状態は split central（ノーマルモードは右手側、ドングルモードはドングル）しか持たないため、central が `&lyr_led` behavior（GLOBAL locality）経由で左手側へレイヤー番号を送っています。実装は [src/layer_led.c](src/layer_led.c)（点灯）/ [src/layer_led_notify.c](src/layer_led_notify.c)（通知）、点灯時間は `CONFIG_SHKB_LAYER_LED_DURATION_MS`（既定 1000）で変更できます。
 
@@ -115,7 +115,9 @@ LiPo（リチウムポリマー）バッテリーは扱いを誤ると膨張・�
 
 **BT プロファイル表示**：電源 ON 時（電池残量表示の後）と BT プロファイル切り替え時に、右手側の LED が接続先プロファイルの色で **2 秒間点滅** します（Profile 0 赤 / 1 青 / 2 緑 / 3 マゼンタ / 4 黄）。プロファイルを管理する split central で動作するため、ノーマルモードの右手側のみ対応です。点滅時間・間隔は `CONFIG_SHKB_LAYER_LED_PROFILE_MS`（既定 2000）/ `CONFIG_SHKB_LAYER_LED_PROFILE_BLINK_MS`（既定 200）で変更できます。
 
-凡例：`▽` = 下位レイヤーに透過 / <span style="background:#b0c8f0;padding:0 4px">青</span> = ファンクション / <span style="background:#b0d8b0;padding:0 4px">緑</span> = ナビゲーション / <span style="background:#f5dbb0;padding:0 4px">橙</span> = Bluetooth / <span style="background:#f0b8d8;padding:0 4px">桃</span> = マウス
+凡例：`▽` = 下位レイヤーに透過 / <span style="background:#b0c8f0;padding:0 4px">青</span> = ファンクション / <span style="background:#b0d8b0;padding:0 4px">緑</span> = ナビゲーション / <span style="background:#f5dbb0;padding:0 4px">橙</span> = Bluetooth / <span style="background:#f0b8d8;padding:0 4px">桃</span> = マウス / <span style="background:#d9c2f0;padding:0 4px">紫の小札</span> = コンボ（両隣のキーを同時押し）
+
+**コンボ**：`J` と `K` を同時に押している間、Scroll レイヤー（`FN6`）が有効になります（`config/shkb.keymap` の `combos` → `ScrollLayer`、key-positions 36 / 37）。全レイヤーで有効なため、各レイヤー図の J・K の間に `FN6` の札を表示しています。ホームポジションから手を離さずにスクロールへ切り替えられます。同時押しの判定時間は ZMK 既定の 50ms で、それより間隔を空けて押せば通常どおり `J` / `K`（Mouse レイヤーでは `LClk` / `MClk`）として入力されます。
 
 各レイヤー図と冒頭のレイアウト図（`layout.svg` = Layer 0 と同じ図）は `python3 docs/generate_layer_svgs.py` で `config/shkb.keymap` から再生成できます（keymap を変更したら実行してください）。
 
@@ -123,7 +125,7 @@ LiPo（リチウムポリマー）バッテリーは扱いを誤ると膨張・�
 
 ### Layer 0 – mac
 
-Layer 0 が Mac 用ベースレイヤーです。起動時はこのレイヤーが選択されます。ホームロウ左端が CTL、左右サムの Alt キーはどちらも OPT、右端は ⌘。
+Layer 0 が Mac 用ベースレイヤーです。起動時はこのレイヤーが選択されます。ホームロウ左端が ⌘、左右サムの Alt キーはどちらも OPT、右サム右端は CTL。左サムは左から `FN3`（Function）/ OPT / `FN6`（Scroll）/ SPC で、右下の ↑ 位置も `FN3` です。`J`+`K` 同時押しでも Scroll レイヤーに入れます。
 
 ![Layer 0 – mac](docs/layer_0_mac.svg)
 
@@ -131,7 +133,7 @@ Layer 0 が Mac 用ベースレイヤーです。起動時はこのレイヤー�
 
 ### Layer 1 – win
 
-Layer 1 が Windows 用ベースレイヤーです。ホームロウ左端が CTL、左右サムの Alt キーは LALT / RALT、右端は ⌘。
+Layer 1 が Windows 用ベースレイヤーです。ホームロウ左端が CTL、左右サムの Alt キーは LALT / RALT、右サム右端は ⌘（Win キー）。`FN3` / `FN6` の位置と `J`+`K` コンボは mac と共通です。
 
 ![Layer 1 – win](docs/layer_1_win.svg)
 
@@ -139,7 +141,7 @@ Layer 1 が Windows 用ベースレイヤーです。ホームロウ左端が CT
 
 ### Layer 2 – iPad
 
-iPad 接続用のベースレイヤーです。キー配列は暫定的に Layer 0（mac）をそのまま流用しています。Bluetooth レイヤーの `BT4` で BT_SEL 4 への切り替えと同時にこのレイヤーへ移行します。
+iPad 接続用のベースレイヤーです。キー配列は Layer 0（mac）をベースに（ホームロウ左端は ⌘）、Alt 位置のサムキーを左から ⌘ / CTL / OPT に入れ替えています。Bluetooth レイヤーの `BT4` で BT_SEL 4 への切り替えと同時にこのレイヤーへ移行します。
 
 ![Layer 2 – iPad](docs/layer_2_ipad.svg)
 
@@ -163,7 +165,7 @@ BT プロファイル切り替えレイヤーです。BT0/1 は Mac モード、
 
 ### Layer 5 – Mouse（AutoMouse）
 
-トラックボールを動かすと自動起動（5 秒タイムアウト）するレイヤーです。J/K/L でクリック、左サムの `FN6` で Scroll レイヤーへ移行します。
+トラックボールを動かすと自動起動（5 秒タイムアウト）するレイヤーです。J/K/L でクリック（左 / 中 / 右）、U/O で PgU/PgD、M/. で Alt(OPT)+← / Alt(OPT)+→。ホームロウ左端の CTL・左 SFT・左右 Alt も使えます。左サムの `FN6` か `J`+`K` 同時押しで Scroll レイヤーへ移行します（J・K を同時に押すとクリックではなくスクロールになります）。
 
 ![Layer 5 – Mouse](docs/layer_5_mouse.svg)
 
@@ -171,7 +173,7 @@ BT プロファイル切り替えレイヤーです。BT0/1 は Mac モード、
 
 ### Layer 6 – Scroll
 
-トラックボールの XY 移動をホイールスクロールにリマップします（スケーリング比 1:8）。全キーが `▽` 透過です。
+トラックボールの XY 移動をホイールスクロールにリマップします（スケーリング比 1:8）。`FN6`（ベースレイヤー / Mouse レイヤーの左サム）か `J`+`K` 同時押しを押している間だけ有効で、全キーが `▽` 透過です。
 
 ![Layer 6 – Scroll](docs/layer_6_scroll.svg)
 
@@ -285,3 +287,49 @@ flowchart TD
 | [badjeff/zmk-pmw3610-driver](https://github.com/badjeff/zmk-pmw3610-driver) | PMW3610 トラックボールドライバ |
 | [caksoylar/zmk-rgbled-widget](https://github.com/caksoylar/zmk-rgbled-widget) | RGB LED ウィジェット |
 | [carrefinho/prospector-zmk-module](https://github.com/carrefinho/prospector-zmk-module) | Prospector ドングル LCD モジュール |
+
+---
+
+## キーテスター（出荷前の動作確認）
+
+[`tools/key-tester.html`](tools/key-tester.html) は、組み立てた SHKB の全 62 キーとトラックボールが正しく動くかを確認するためのページです。インストールは不要で、ファイルをブラウザ（Chrome / Edge / Safari）で開くだけで使えます。
+
+### できること
+
+- 押したキーを盤面上で緑にして、左手 28 キー・右手 34 キーの確認状況を表示する
+- キーを離してから 30ms 未満で同じキーが再入力されたら、チャタリングの疑いとして赤く表示する
+- トラックボールの上下左右の移動、左・中・右クリック、スクロールを確認する
+- 個体番号を入力し、合否・未確認のキー・チャタリング疑いのキーをテキストでコピーする
+
+### 使い方
+
+1. `tools/key-tester.html` をブラウザで開く（リポジトリをクローンするか、ファイルをダウンロードしてダブルクリック）。
+2. 画面上部の「確認に使う OS」で **Mac** または **Windows** を選ぶ。
+   - Mac: BT0 / BT1（Layer 0: mac）で接続する。A 列の左が ⌘、右下が Ctrl。
+   - Windows: BT2 / BT3（Layer 1: win）で接続する。
+3. 「個体番号・メモ」に個体を識別する番号などを入力する。
+4. ページ内をクリックしてから、全キーを 1 回ずつ押す。**この間はトラックボールに触れない**（ボールを動かすと 5 秒間 Mouse レイヤーになり、J / K / L がクリックに変わるため）。
+5. 次のキーは、ブラウザが直接区別できないので手順に沿って確認する。
+
+   | キー | 確認方法 |
+   |------|----------|
+   | SPACE（左右 2 つ） | 同じ信号を出すため、**左 → 右** の順に押す |
+   | FN（左下・右端） | FN 単体では信号が出ないため、**左の FN + `1`**、続けて **右の FN + `1`** を押す（F1 が届けば OK） |
+   | SCRL（左親指） | 押しながらボールを上下に転がし、スクロールが届けば OK（J + K の同時押しでもスクロールになる） |
+
+6. 「トラックボール」のパッド上でボールを上下左右に転がし、J / K / L でクリックを確認する。
+7. すべて緑になったら「結果をコピー」を押し、出荷記録などに貼り付ける。
+
+### 配列にないキーが届いたとき
+
+ZMK Studio でキー配置を変えた場合など、テスターが知らない信号が届くと「配列にない ○○ を受け取りました」と表示されます。そのときは、**今押した位置のキーを盤面でクリック**すると、そのキーとして登録されます。
+
+- 登録は Mac 用・Windows 用で別々にブラウザに保存され、次の個体の確認でもそのまま使えます。
+- 盤面のキーにマウスを乗せると、そのキーとして判定している信号が表示されます。
+- 登録を消すときは「登録したキーを消去」を押します。
+
+### 注意
+
+- macOS の ⌘ + Q / ⌘ + W などのショートカットや、Windows の Win キー（スタートメニュー）はブラウザが止められません。修飾キーは単体で押してください。
+- 日本語入力はオフにしてから確認してください。
+- キーマップ（`config/shkb.keymap`）を変更した場合は、`tools/key-tester.html` 内のキー定義（`const K`、Mac 用の差分は `rebuildCodes()`）も合わせて更新してください。
