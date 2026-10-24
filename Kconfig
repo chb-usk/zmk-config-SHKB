@@ -40,6 +40,34 @@ config SHKB_LAYER_LED_NOTIFY
     bool "Send layer changes to the layer LED on every split half via the lyr_led behavior"
     depends on !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
 
+config SHKB_PROFILE_BASE_LAYER
+    bool "Switch to the active BLE profile's base layer at power-on and on profile change"
+    depends on ZMK_BLE && SETTINGS && (!ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL)
+
+if SHKB_PROFILE_BASE_LAYER
+
+config SHKB_PROFILE_BASE_LAYER_0
+    int "Base layer for BLE profile 0"
+    default 0
+
+config SHKB_PROFILE_BASE_LAYER_1
+    int "Base layer for BLE profile 1"
+    default 0
+
+config SHKB_PROFILE_BASE_LAYER_2
+    int "Base layer for BLE profile 2"
+    default 1
+
+config SHKB_PROFILE_BASE_LAYER_3
+    int "Base layer for BLE profile 3"
+    default 1
+
+config SHKB_PROFILE_BASE_LAYER_4
+    int "Base layer for BLE profile 4"
+    default 2
+
+endif
+
 DT_COMPAT_ZMK_BEHAVIOR_SHKB_LAYER_LED := zmk,behavior-shkb-layer-led
 
 config ZMK_BEHAVIOR_SHKB_LAYER_LED

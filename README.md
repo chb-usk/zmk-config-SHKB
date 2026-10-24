@@ -159,6 +159,8 @@ FN キー（または ↑ キー）を押している間有効になるレイヤ
 
 BT プロファイル切り替えレイヤーです。BT0/1 は Mac モード、BT2/3 は Win モード、BT4 は iPad モードに同時切り替えするマクロです。`CLRa` で全プロファイルを、右サムの `CLR` で選択中のプロファイルをクリアします。`STU` は ZMK Studio のロック解除です。ホームロウ左端の CTL と、Function レイヤーと同じ位置のナビゲーションキー（矢印・HOM/END・PgU/PgD）も使えます。
 
+**電源 ON 時のベースレイヤー復元**：ZMK は電源 ON 時に接続先プロファイルだけを復元するため、従来は BT2 を選んだまま再起動すると Layer 0（mac）に戻っていました。[src/profile_base_layer.c](src/profile_base_layer.c) が、電源 ON 時（保存済みプロファイルの読込後）とプロファイル番号が変わったときに、プロファイルに対応するベースレイヤーへ切り替えます（BT0/1 → Layer 0 / BT2/3 → Layer 1 / BT4 → Layer 2）。同じプロファイルの再接続・切断では切り替えません。対応は `CONFIG_SHKB_PROFILE_BASE_LAYER_0`〜`_4` で変更でき、プロファイルを管理する split central（ノーマルモードの右手側、ドングルモードのドングル）で有効にしています。
+
 ![Layer 4 – Bluetooth](docs/layer_4_bluetooth.svg)
 
 ---
