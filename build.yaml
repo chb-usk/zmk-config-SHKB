@@ -1,30 +1,17 @@
+# DYA Studio お試しブランチ（cormoran/zmk main+dya, Zephyr 4.1）
+# ボード名は Zephyr 4.1 の命名（seeeduino_xiao_ble → xiao_ble//zmk）。
+# ドングル構成（prospector モジュール含む）は Zephyr 4.1 での動作が未確認のため、
+# このブランチではノーマルモード（右手セントラル）のみビルドする。
 include:
-  # ── Normal mode (dongleless) ──────────────────────────────────────────
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble//zmk
     shield: shkb_l
     artifact-name: SHKB_l
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble//zmk
     shield: shkb_r
     snippet: studio-rpc-usb-uart
     artifact-name: SHKB_r
 
-  # ── Dongle mode ───────────────────────────────────────────────────────
-  - board: seeeduino_xiao_ble
-    shield: shkb_l_peripheral
-    artifact-name: SHKB_l_peripheral
-  - board: seeeduino_xiao_ble
-    shield: shkb_r_peripheral
-    artifact-name: SHKB_r_peripheral
-  - board: seeeduino_xiao_ble
-    shield: shkb_dongle
-    snippet: studio-rpc-usb-uart
-    artifact-name: SHKB_dongle
-  - board: seeeduino_xiao_ble
-    shield: shkb_dongle prospector_adapter
-    snippet: studio-rpc-usb-uart
-    artifact-name: SHKB_dongle_prospector
-
   # ── Utility ───────────────────────────────────────────────────────────
-  - board: seeeduino_xiao_ble
+  - board: xiao_ble//zmk
     shield: settings_reset
     artifact-name: settings_reset

@@ -11,6 +11,18 @@
             compatible = "zmk,behavior-shkb-layer-led";
             #binding-cells = <1>;
         };
+
+        /* 診断用（通常は無効）: ホストとの BLE 接続パラメータを文字で入力する
+         * &conn_info（src/behavior_conn_info.c）。問い合わせ対応で接続間隔を
+         * 確認したいときだけ、下のコメントを外し、キーマップかコンボに
+         * &conn_info を割り当てた診断用ファームウェアを作る（README 参照）。
+        conn_info: conninfo {
+            compatible = "zmk,behavior-shkb-conn-info";
+            #binding-cells = <0>;
+            display-name = "Conn Info";
+        };
+         */
+
     };
 
     chosen {
@@ -148,4 +160,11 @@
 &vbatt {
     output-ohms = <510000>;
     full-ohms = <1510000>;
+};
+
+/* Zephyr 4.1 の xiao_ble ボードは既定でコンソール用の USB シリアル(CDC ACM)を持つ。
+ * studio-rpc-usb-uart スニペットの Studio 用ポートと合わせて 2 つ見えてしまい、
+ * 違う方に接続すると Studio が応答しないため無効化する（DYA Dash 公式と同じ対応）。 */
+&board_cdc_acm_uart {
+    status = "disabled";
 };

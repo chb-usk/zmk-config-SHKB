@@ -1,28 +1,76 @@
+# DYA Studio 対応（お試しブランチ dya-studio）
+# cormoran/zmk の main+dya（Zephyr 4.1）と DYA Studio 用モジュール一式。
+# 構成が近い moNa2（soraclock/DYA）で実機確認済みのコミットに固定している。
+# 更新するときは各ブランチの最新 SHA に差し替えて再ビルドする。
 manifest:
+  defaults:
+    remote: cormoran
+    revision: main
   remotes:
-    - name: zmkfirmware
-      url-base: https://github.com/zmkfirmware
-    - name: sayu-hub
-      url-base: https://github.com/sayu-hub
-    - name: badjeff       # PMW3610 trackball driver
-      url-base: https://github.com/badjeff
-    - name: caksoylar     # RGB LED widget
-      url-base: https://github.com/caksoylar
-    - name: carrefinho    # Prospector dongle display module
-      url-base: https://github.com/carrefinho
+    - name: cormoran
+      url-base: https://github.com/cormoran
   projects:
     - name: zmk
-      remote: zmkfirmware
-      revision: v0.3
-      import: app/west.yml
-    - name: zmk-pmw3610-driver
-      remote: badjeff
-      revision: main
-    - name: zmk-rgbled-widget
-      remote: caksoylar
-      revision: main
-    - name: prospector-zmk-module
-      remote: carrefinho
-      revision: main
+      revision: e5c9b6915b56801193e359dd9bad4a167ce0d1b8 # main+dya (2026-10-12)
+      import:
+        file: app/west.yml
+    - name: zephyr
+      revision: 63363d92c475ad203b35e9047cef7ecd8706a6fc # v4.1.0+zmk-fixes+nrf-half-duplex-uart (2026-10-12)
+      clone-depth: 1
+      import:
+        name-blocklist:
+          - ci-tools
+          - hal_altera
+          - hal_cypress
+          - hal_infineon
+          - hal_microchip
+          - hal_nxp
+          - hal_openisa
+          - hal_xtensa
+          - hal_st
+          - hal_ti
+          - loramac-node
+          - mcuboot
+          - mcumgr
+          - net-tools
+          - openthread
+          - edtt
+          - trusted-firmware-m
+    # ── DYA Studio コア ────────────────────────────────────────────────
+    - name: zmk-feature-custom-settings
+      revision: c6a7fef3a3be3d3ace5de9a4b0628c6418cd1f3f # main (2026-10-12)
+    - name: zmk-feature-fast-keymap
+      revision: 8dac76de0ba38588ba39ca498910e24f8332bc6b # main (2026-10-12)
+    - name: zmk-feature-module-physical-layout
+      revision: 4f18de45dc27820725d267916b4cdacc0e0b6cf9 # main (2026-10-12)
+    - name: zmk-feature-input-stream
+      revision: aeb015908a42a7615ccdccc7feb3a10d23132a71 # main (2026-10-12)
+    # ── マクロ & コンボ ────────────────────────────────────────────────
+    - name: zmk-feature-runtime-macro
+      revision: 38530962eb7061b60efcb98e84585cfb1f0cb6de # main (2026-10-12)
+    - name: zmk-feature-runtime-combo
+      revision: d9490e7b5d41c516221d131241009e81740efcee # main (2026-10-12)
+    # ── トラックボール（PMW3610 は badjeff 版から cormoran 版に置き換え）──
+    - name: zmk-driver-pmw3610-with-custom-studio-rpc
+      revision: 5c34ea0eec246a1c986111417cd779b53144629a # main (2026-10-12)
+    - name: zmk-module-runtime-input-processor
+      revision: decf628d7ce5ed95b520c650824c28ea9de649c1 # main (2026-10-12)
+    # ── 接続（BLE管理・接続先/OSごとのデフォルトレイヤー）─────────────
+    - name: zmk-module-ble-management
+      revision: 57738cc4fc6ba80e82a7ac57741a0339cb186cd4 # main (2026-10-12)
+    - name: zmk-feature-default-layer
+      revision: b25cb5b324da2d9bbc84e1877c775f5b2b7c6845 # codex/custom-rpc-rewrite (2026-10-12)
+      import: true
+    - name: zmk-feature-os-detection
+      revision: 3052679f645b8fc1997275c2eaa6b86bdd55ca01 # main (2026-10-12)
+    # ── 設定・診断 ─────────────────────────────────────────────────────
+    - name: zmk-module-settings-rpc
+      revision: 78f86df9e6c5edaf57bef3ccbd7f360cfdf49291 # main (2026-10-12)
+    - name: zmk-feature-device-info
+      revision: 8cedd2dd9f04e19ea5a17b94914dd47a09d8db11 # main (2026-10-12)
+    - name: zmk-feature-watchdog
+      revision: 84ad14c6c3645dc40b23f45d08ab45418655f912 # main (2026-10-12)
+    - name: zmk-feature-kscan-diagnostics
+      revision: 1432f7fe0cfe903cd7d3c9931ae6bd6f2e1f328e # main (2026-07-18)
   self:
     path: config

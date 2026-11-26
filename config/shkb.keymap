@@ -2,6 +2,8 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
+/* DYA Studio の「マクロ&コンボ」で作るランタイムマクロをキーに割り当てるための behavior */
+#include <behaviors/runtime_macro.dtsi>
 
 /*
  * 62-key Split HHKB layout
@@ -27,47 +29,15 @@
          * USE_PHY_LAYOUTS=true, which ZMK Studio requires. */
     };
 
+    /* BT0Mac..BT4iPad マクロ（&bt BT_SEL n + &to layer）は廃止。
+     * 接続先ごとのベースレイヤーは DYA Studio の「接続」タブ
+     * （zmk-feature-default-layer）で設定する。 */
     macros {
         to_layer_0: to_layer_0 {
             compatible = "zmk,behavior-macro-one-param";
             #binding-cells = <1>;
             bindings = <&to 0 &macro_param_1to1 &kp MACRO_PLACEHOLDER>;
             label = "TO_LAYER_0";
-        };
-
-        BT0Mac: BT0Mac {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&bt BT_SEL 0 &to 0>;
-            label = "BT0MAC";
-        };
-
-        BT1Mac: BT1Mac {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&bt BT_SEL 1 &to 0>;
-            label = "BT1MAC";
-        };
-
-        BT2Win: BT2Win {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&bt BT_SEL 2 &to 1>;
-            label = "BT2WIN";
-        };
-
-        BT3Win: BT3Win {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&bt BT_SEL 3 &to 1>;
-            label = "BT3WIN";
-        };
-
-        BT4iPad: BT4iPad {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&bt BT_SEL 4 &to 2>;
-            label = "BT4IPAD";
         };
     };
 
@@ -82,12 +52,17 @@
         };
     };
 
-    combos {
-        compatible = "zmk,combos";
+    /* DYA Studio の「マクロ&コンボ」で表示・編集できるランタイムコンボの初期値。
+     * Studio で変更・削除するとそちらが優先され、「Reset to Default」か
+     * settings_reset でここの値に戻る。（旧: zmk,combos の ScrollLayer） */
+    runtime_combo_defaults {
+        compatible = "cormoran,runtime-combo-defaults";
 
         ScrollLayer {
+            slot = <0>;
+            key-positions = <36 37>;   /* J + K */
             bindings = <&mo 6>;
-            key-positions = <36 37>;
+            display-name = "Scroll";
         };
     };
 
@@ -147,7 +122,7 @@
         Bluetooth {
             display-name = "Bluetooth";
             bindings = <
-&trans            &BT0Mac  &BT1Mac  &BT2Win  &BT3Win  &BT4iPad            &bt BT_CLR_ALL  &trans          &trans    &trans         &trans    &trans     &trans  &trans  &trans
+&trans            &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4            &bt BT_CLR_ALL  &trans          &trans    &trans         &trans    &trans     &trans  &trans  &trans
 &trans            &trans   &trans   &trans   &trans   &trans              &trans          &trans          &trans    &trans         &trans    &kp UP     &trans  &trans
 &kp LEFT_CONTROL  &trans   &trans   &trans   &trans   &trans              &trans          &studio_unlock  &kp HOME  &kp PAGE_UP    &kp LEFT  &kp RIGHT  &trans
 &trans            &trans   &trans   &trans   &trans   &trans              &trans          &trans          &kp END   &kp PAGE_DOWN  &kp DOWN  &trans     &trans
@@ -160,9 +135,9 @@
             bindings = <
 &trans            &trans  &trans  &trans  &trans    &trans            &trans  &trans              &trans    &trans               &trans  &trans  &trans  &trans  &trans
 &trans            &trans  &trans  &trans  &trans    &trans            &trans  &kp PAGE_UP         &trans    &kp PAGE_DOWN        &trans  &trans  &trans  &trans
-&kp LEFT_CONTROL  &trans  &trans  &trans  &trans    &trans            &trans  &mkp MB1            &mkp MB3  &mkp MB2             &trans  &trans  &trans
-&kp LEFT_SHIFT    &trans  &trans  &trans  &trans    &trans            &trans  &kp LA(LEFT_ARROW)  &trans    &kp LA(RIGHT_ARROW)  &trans  &trans  &trans
-                                  &trans  &kp LALT  &mo 6   &trans            &trans              &kp RALT  &trans
+&trans            &trans  &trans  &trans  &trans    &trans            &trans  &mkp MB1            &mkp MB3  &mkp MB2             &trans  &trans  &trans
+&trans            &trans  &trans  &trans  &trans    &trans            &trans  &trans              &trans    &trans               &trans  &trans  &trans
+                                  &trans  &trans    &mo 6   &trans            &trans              &trans    &trans
             >;
         };
 
@@ -175,6 +150,15 @@
 &trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans  &trans
                         &trans  &trans  &trans  &trans            &trans  &trans  &trans
             >;
+        };
+
+        /* DYA Studio / ZMK Studio から使える予備レイヤー（通常ビルドでは無視される） */
+        extra1 {
+            status = "reserved";
+        };
+
+        extra2 {
+            status = "reserved";
         };
     };
 };

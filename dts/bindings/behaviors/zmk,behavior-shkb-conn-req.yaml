@@ -1,0 +1,22 @@
+description: Request BLE connection parameters from the host and type the result (diagnostics)
+
+compatible: "zmk,behavior-shkb-conn-req"
+
+include: zero_param.yaml
+
+properties:
+  interval-min:
+    type: int
+    required: true
+    description: Minimum connection interval in 1.25 ms units
+  interval-max:
+    type: int
+    required: true
+    description: Maximum connection interval in 1.25 ms units
+  latency:
+    type: int
+    default: 30
+  timeout:
+    type: int
+    default: 400
+    description: Supervision timeout in 10 ms units

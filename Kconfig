@@ -73,3 +73,17 @@ DT_COMPAT_ZMK_BEHAVIOR_SHKB_LAYER_LED := zmk,behavior-shkb-layer-led
 config ZMK_BEHAVIOR_SHKB_LAYER_LED
     bool
     default $(dt_compat_enabled,$(DT_COMPAT_ZMK_BEHAVIOR_SHKB_LAYER_LED))
+
+DT_COMPAT_ZMK_BEHAVIOR_SHKB_CONN_INFO := zmk,behavior-shkb-conn-info
+
+config ZMK_BEHAVIOR_SHKB_CONN_INFO
+    bool
+    default $(dt_compat_enabled,$(DT_COMPAT_ZMK_BEHAVIOR_SHKB_CONN_INFO))
+
+config SHKB_CONN_INTERVAL_FALLBACK
+    bool "Request a 15 ms host connection interval when the preferred range was not applied"
+    depends on BT_PERIPHERAL
+    help
+      macOS rejects the preferred 7.5-11.25 ms range and stays at 30 ms.
+      When a host connection is still slower than 15 ms a few seconds after
+      connecting, request a fixed 15 ms interval instead.

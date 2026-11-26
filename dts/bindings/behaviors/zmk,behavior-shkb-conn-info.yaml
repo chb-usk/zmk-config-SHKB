@@ -1,0 +1,5 @@
+description: Type the active BLE profile's connection parameters as text (diagnostics)
+
+compatible: "zmk,behavior-shkb-conn-info"
+
+include: zero_param.yaml

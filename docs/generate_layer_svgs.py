@@ -66,6 +66,8 @@ LABELS = {
     "kp PAGE_UP": ("PgU", "nav"), "kp PAGE_DOWN": ("PgD", "nav"),
     "BT0Mac": ("BT0", "bt"), "BT1Mac": ("BT1", "bt"), "BT2Win": ("BT2", "bt"),
     "BT3Win": ("BT3", "bt"), "BT4iPad": ("BT4", "bt"),
+    "bt BT_SEL 0": ("BT0", "bt"), "bt BT_SEL 1": ("BT1", "bt"), "bt BT_SEL 2": ("BT2", "bt"),
+    "bt BT_SEL 3": ("BT3", "bt"), "bt BT_SEL 4": ("BT4", "bt"),
     "bt BT_CLR_ALL": ("CLRa", "bt"), "bt BT_CLR": ("CLR", "bt"),
     "mkp MB1": ("LClk", "mouse"), "mkp MB2": ("RClk", "mouse"), "mkp MB3": ("MClk", "mouse"),
 }

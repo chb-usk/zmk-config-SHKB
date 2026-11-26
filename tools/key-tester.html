@@ -155,7 +155,7 @@ button.btn.danger{border-color:var(--warn);color:var(--warn);background:transpar
     <section class="panel">
       <h2>確認の手順</h2>
       <ol class="steps">
-        <li>キーボードをつなぎ、このページをクリックしてから全キーを1回ずつ押す。<strong>ボールには触れない</strong>（ボールを動かすと5秒間マウスレイヤーになり、J/K/Lがクリックに変わります）。</li>
+        <li>キーボードをつなぎ、このページをクリックしてから全キーを1回ずつ押す。<strong>ボールには触れない</strong>（ボールを動かすと5秒間マウスレイヤーになり、J/K/Lがクリックに変わります。解除までの時間は DYA Studio の「トラックボール」タブで変えている場合があります）。</li>
         <li><kbd>SPACE</kbd>は2つあり同じ信号を出すので、<strong>左 → 右</strong>の順に押す。</li>
         <li><kbd>FN</kbd>は単体では信号が出ません。<strong>左のFN</strong>を押しながら<kbd>1</kbd>（→ F1）、次に<strong>右のFN</strong>を押しながら<kbd>1</kbd>で確認します。</li>
         <li>右のパッド上でボールを上下左右に転がし、<kbd>J</kbd><kbd>K</kbd><kbd>L</kbd>でクリックを確認する。</li>
@@ -368,8 +368,8 @@ button.btn.danger{border-color:var(--warn);color:var(--warn);background:transpar
     win: { ctl:['Ctrl',''],  lalt:['Alt',''],     ralt:['Alt',''],     rgui:['Win',''] },
   };
   const OSNOTE = {
-    mac: '<strong>Mac で確認するとき</strong><span>BT0 / BT1（Layer 0: mac）で接続します。A列の左が ⌘、右下が Ctrl です。⌘ と組み合わせたショートカット（⌘+Q / ⌘+W など）はブラウザが止められないので、修飾キーは単体で押してください。日本語入力はオフにしておくと確実です。</span>',
-    win: '<strong>Windows で確認するとき</strong><span>BT2 / BT3（Layer 1: win）で接続します。Win キーはスタートメニューが開きますが、記録はされます。開いたら Esc で閉じ、ページをクリックし直してから続けてください。日本語入力はオフにしておくと確実です。</span>',
+    mac: '<strong>Mac で確認するとき</strong><span>ベースレイヤーが mac（Layer 0）になる接続で確認します。接続先ごとのレイヤーは DYA Studio の「接続」タブで確認・設定できます（設定していなければ mac のままです）。A列の左が ⌘、右下が Ctrl です。⌘ と組み合わせたショートカット（⌘+Q / ⌘+W など）はブラウザが止められないので、修飾キーは単体で押してください。日本語入力はオフにしておくと確実です。</span>',
+    win: '<strong>Windows で確認するとき</strong><span>ベースレイヤーが win（Layer 1）になる接続で確認します。DYA Studio の「接続」タブで、使う接続先（USB や BT プロファイル）のデフォルトレイヤーを win にするか、「OS 検出に従う」にしておいてください（何も設定していないと mac のままです）。Win キーはスタートメニューが開きますが、記録はされます。開いたら Esc で閉じ、ページをクリックし直してから続けてください。日本語入力はオフにしておくと確実です。</span>',
   };
   let os = /Mac|iPhone|iPad/.test(navigator.userAgent) ? 'mac' : 'win';
   try { const saved = localStorage.getItem('shkb-os'); if (saved==='mac'||saved==='win') os = saved; } catch {}
